@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Employee</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 500px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+        label {
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+        input:focus, select:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+        .submit-btn:hover {
+            background: #0056b3;
+        }
+        @media (max-width: 576px) {
+            .container {
+                padding: 20px;
+            }
+            h2 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>ADD EMPLOYEES</h2>
+        <form action="/add_employee_post" method="POST" enctype="multipart/form-data">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required pattern="[A-Z a-z.]{3,25}" title="Only characters">
+
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone" required pattern="[6789][0-9]{9}" title="start with 9,8,7,6 and 10 characters">
+
+            <label for="employee_code">Employee Code:</label>
+            <input type="text" id="employee_code" name="employee_code" required ">
+
+            <label for="place">Place:</label>
+            <input type="text" id="place" name="place" required pattern="[A-Z a-z.]{3,25}">
+
+            <label for="place">Pin::</label>
+            <input type="text" id="place" name="pin" required pattern="[0-9]{6}">
+
+            <label for="place">Post:</label>
+            <input type="text" id="place" name="post" required pattern="[A-Z a-z.]{3,25}">
+
+            <label for="gender">Gender:</label>
+<select id="gender" name="gender" required>
+    <option value="" disabled selected>Select Gender</option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+    <option value="Other">Other</option>
+</select>
+
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required pattern="[a-z0-9._]+[@][a-z]+[.][a-z]+" title="sample@domail.com">
+
+            <label for="photo">Photo:</label>
+            <input type="file" id="photo" name="photo" required accept="image/*">
+
+            <label for="department_id">Department:</label>
+            <select id="department_id" name="department_id" required>
+                {% for department in dep %}
+                    <option value="{{ department.id }}">{{ department.department_name }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="submit-btn">Add Employee</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

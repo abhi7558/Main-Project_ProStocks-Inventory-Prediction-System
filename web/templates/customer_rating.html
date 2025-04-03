@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave a Review</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group .stars {
+            display: flex;
+            justify-content: space-between;
+        }
+        .form-group .stars label {
+            cursor: pointer;
+        }
+        .form-group .stars input {
+            display: none;
+        }
+        .form-group .stars label:hover,
+        .form-group .stars label:hover ~ label,
+        .form-group .stars input:checked ~ label {
+            color: gold;
+        }
+        .form-group .stars label:before {
+            content: '\2605';
+            font-size: 24px;
+        }
+        .form-group textarea {
+            resize: vertical;
+            height: 100px;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Leave a Review</h1>
+        <form id="reviewForm" action="\send_review\" method="post">
+            <div class="form-group">
+                <label for="productName">Product Name</label>
+               {{ val.ORDER.product_id.product_name }}
+            </div>
+
+            <div class="form-group">
+                <label for="reviewText">Your Review</label>
+                <textarea id="reviewText" name="reviewText" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Rating</label>
+                <div class="stars">
+                    <input type="radio" id="star5" name="rating" value="5">
+                    <label for="star5"></label>
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4"></label>
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3"></label>
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2"></label>
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1"></label>
+                </div>
+            </div>
+            <div class="form-group"><a href="submit_review">
+                <button type="submit">Submit Review</button></a>
+            </div>
+        </form>
+    </div>
+
+{#    <script>#}
+{#        document.getElementById('reviewForm').addEventListener('submit', function(event) {#}
+{#            event.preventDefault();#}
+{#            const productName = document.getElementById('productName').value;#}
+{#            const reviewText = document.getElementById('reviewText').value;#}
+{#            const rating = document.querySelector('input[name="rating"]:checked').value;#}
+{##}
+{#            alert(`Thank you for your review!\nProduct: ${productName}\nRating: ${rating} stars\nReview: ${reviewText}`);#}
+{#            // Here you can add code to send the review data to your server#}
+{#        });#}
+{#    </script>#}
+</body>
+</html>

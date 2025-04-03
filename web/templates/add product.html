@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Add Product</h2>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <label for="product_name">Product Name:</label>
+            <input type="text" id="product_name" name="product_name" required>
+
+            <label for="brand">Brand:</label>
+            <select name="BRAND" id="brand" required>
+                <option value="">Select a Brand</option>
+                {% for i in brand %}
+                <option value="{{ i.id }}">{{ i.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="category">Category:</label>
+            <select name="CATEGORY" id="category" required>
+                <option value="">Select a Category</option>
+                {% for i in cat %}
+                <option value="{{ i.id }}">{{ i.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="department">Department:</label>
+            <select name="department_id" id="department" required>
+                <option value="">Select a Department</option>
+                {% for i in department %}
+                <option value="{{ i.id }}">{{ i.department_name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="price">Price:</label>
+            <input type="number" step="0.01" id="price" name="price" required>
+            <label for="product_name">Quantity:</label>
+           <input type="number" id="quantity" name="quantity" value="1" min="1" step="1" required>
+        <label for="product_name">Threshold:</label>
+           <input type="number" id="thresh" name="thersh"  required>
+
+            <input type="submit" class="submit-btn" value="Add Product">
+        </form>
+    </div>
+</body>
+</html>

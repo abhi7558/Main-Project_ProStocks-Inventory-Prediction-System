@@ -1,0 +1,404 @@
+{% load static %}
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Sales Insights - Prostocks</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <link rel="stylesheet" href="{% static 'sales/assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="{% static 'sales/assets/css/ready.css' %}">
+    <link rel="stylesheet" href="{% static 'sales/assets/css/demo.css' %}">
+    <style>
+        body {
+            background: linear-gradient(135deg, #fefafb, rgba(153, 153, 255, 0.03));
+            font-family: 'Nunito', sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+        .main-panel {
+            background: transparent;
+            padding: 20px;
+        }
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .filter {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .filter label {
+            color: #ffcc00;
+            margin-right: 10px;
+        }
+        .filter input[type="date"] {
+            padding: 8px;
+            border-radius: 5px;
+            background: #fff;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 15px;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .best-seller { border: 2px solid #28a745; }
+        .best-seller:hover { background: #28a745; color: #fff; }
+        .worst-seller { border: 2px solid #dc3545; }
+        .worst-seller:hover { background: #dc3545; color: #fff; }
+        .best-performer { border: 2px solid #17a2b8; }
+        .best-performer:hover { background: #17a2b8; color: #fff; }
+        .worst-performer { border: 2px solid #6c757d; }
+        .worst-performer:hover { background: #6c757d; color: #fff; }
+
+        .card-title {
+            color: #1e55ff;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .card-body p {
+            color: #333;
+            margin: 5px 0;
+        }
+        .card-body p strong {
+            color: #ffcc00;
+        }
+        .card:hover .card-body p,
+        .card:hover .card-title {
+            color: #fff;
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, #00d4ff, #007bff);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            transition: all 0.3s;
+            display: inline-block;
+            margin: 10px auto;
+        }
+        .btn-primary:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.6);
+        }
+        .chart {
+            background: rgba(153, 153, 255, 0);
+            padding: 10px;
+            border-radius: 10px;
+            min-height: 300px;
+        }
+        #forecasting-section {
+            display: none;
+        }
+        .print-btn {
+            background: #ffcc00;
+            color: #333;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            margin-left: 10px;
+        }
+        .employee-photo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            display: block;
+        }
+        .card-footer {
+            text-align: center;
+            padding-top: 15px;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .col-md-6, .col-md-12 {
+            flex: 1;
+            max-width: 100%;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .main-panel { padding: 15px; }
+            .filter {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .filter input[type="date"] {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            .col-md-6 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+            .card {
+                padding: 10px;
+            }
+            .card-title {
+                font-size: 1.2rem;
+            }
+            .card-body p {
+                font-size: 0.9rem;
+            }
+            .btn-primary, .print-btn {
+                width: 100%;
+                margin: 5px 0;
+            }
+            .chart {
+                min-height: 200px;
+            }
+        }
+        @media (max-width: 576px) {
+            .page-title {
+                font-size: 1.5rem;
+            }
+            .card-title {
+                font-size: 1rem;
+            }
+            .card-body p {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="">
+        <div class="content">
+            <div class="container-fluid" id="dashboard">
+                <a href="/manager_home" class="btn btn-outline-primary"><i class="bi bi-house-door"></i> Home</a>
+                <h4 class="page-title">Prostocks Sales Insights - April 01, 2025</h4>
+
+                <!-- Date Filter -->
+                <div class="filter">
+                    <label>Select Sales Date Range:</label>
+                    <input type="date" id="start-date" onchange="updateDashboard()" value="2025-04-01">
+                    <label>to</label>
+                    <input type="date" id="end-date" onchange="updateDashboard()" value="2025-04-01">
+                </div>
+
+                <!-- Product Categories -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card best-seller">
+                            <div class="card-header"><h4 class="card-title">Electronics - Best Seller</h4></div>
+                            <div class="card-body">
+                                <p><strong>Product:</strong> Smart TV</p>
+                                <p>Volume: <span id="best-electronics-vol">150</span></p>
+                                <p>Sales: $<span id="best-electronics-sales">75,000</span></p>
+                            </div>
+                        </div>
+                        <div class="card worst-seller">
+                            <div class="card-header"><h4 class="card-title">Electronics - Worst Seller</h4></div>
+                            <div class="card-body">
+                                <p><strong>Product:</strong> Old Radio</p>
+                                <p>Volume: <span id="worst-electronics-vol">5</span></p>
+                                <p>Sales: $<span id="worst-electronics-sales">250</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card best-seller">
+                            <div class="card-header"><h4 class="card-title">Clothing - Best Seller</h4></div>
+                            <div class="card-body">
+                                <p><strong>Product:</strong> Jacket</p>
+                                <p>Volume: <span id="best-clothing-vol">200</span></p>
+                                <p>Sales: $<span id="best-clothing-sales">20,000</span></p>
+                            </div>
+                        </div>
+                        <div class="card worst-seller">
+                            <div class="card-header"><h4 class="card-title">Clothing - Worst Seller</h4></div>
+                            <div class="card-body">
+                                <p><strong>Product:</strong> Socks</p>
+                                <p>Volume: <span id="worst-clothing-vol">10</span></p>
+                                <p>Sales: $<span id="worst-clothing-sales">100</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Employee Performance (Last 30 Days) -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card best-performer">
+                            <div class="card-header"><h4 class="card-title">Sales Dept - Best Performer</h4></div>
+                            <div class="card-body text-center">
+                                <img src="https://via.placeholder.com/60" alt="Jane Doe" class="employee-photo">
+                                <p><strong>Name:</strong> Jane Doe</p>
+                                <p>Sales: $<span id="best-sales-emp">60,000</span></p>
+                                <p>Volume: <span id="best-sales-vol">120</span></p>
+                            </div>
+                        </div>
+                        <div class="card worst-performer">
+                            <div class="card-header"><h4 class="card-title">Sales Dept - Worst Performer</h4></div>
+                            <div class="card-body text-center">
+                                <img src="https://via.placeholder.com/60" alt="John Smith" class="employee-photo">
+                                <p><strong>Name:</strong> John Smith</p>
+                                <p>Sales: $<span id="worst-sales-emp">5,000</span></p>
+                                <p>Volume: <span id="worst-sales-vol">10</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card best-performer">
+                            <div class="card-header"><h4 class="card-title">Inventory Dept - Best Performer</h4></div>
+                            <div class="card-body text-center">
+                                <img src="https://via.placeholder.com/60" alt="Emily Clark" class="employee-photo">
+                                <p><strong>Name:</strong> Emily Clark</p>
+                                <p>Sales: $<span id="best-inv-emp">45,000</span></p>
+                                <p>Volume: <span id="best-inv-vol">90</span></p>
+                            </div>
+                        </div>
+                        <div class="card worst-performer">
+                            <div class="card-header"><h4 class="card-title">Inventory Dept - Worst Performer</h4></div>
+                            <div class="card-body text-center">
+                                <img src="https://via.placeholder.com/60" alt="Mike Brown" class="employee-photo">
+                                <p><strong>Name:</strong> Mike Brown</p>
+                                <p>Sales: $<span id="worst-inv-emp">3,000</span></p>
+                                <p>Volume: <span id="worst-inv-vol">8</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sales Graph -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Total Sales Trend</h4>
+                                <div class="filter">
+                                    <label>Duration:</label>
+                                    <select id="sales-duration" onchange="updateSalesGraph()">
+                                        <option value="7">Last 7 Days</option>
+                                        <option value="30">Last 30 Days</option>
+                                        <option value="90">Last 90 Days</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div id="salesChart" class="chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inventory Forecasting Button -->
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <button class="btn btn-primary" onclick="showForecasting()">View Inventory Forecasting</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Forecasting Section -->
+            <div class="container-fluid" id="forecasting-section">
+                <h4 class="page-title">Inventory Forecasting</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header"><h4 class="card-title">Products to Buy</h4></div>
+                            <div class="card-body" id="forecast-details">
+                                <p>Smart TV: 50 units (Projected Demand: 200)</p>
+                                <p>Jacket: 30 units (Projected Demand: 250)</p>
+                                <p>Old Radio: 0 units (Low Demand)</p>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-primary" onclick="showDashboard()">Back to Sales</button>
+                                <button class="btn print-btn" onclick="printForecast()">Print Forecast</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'sales/assets/js/core/jquery.3.2.1.min.js' %}"></script>
+    <script src="{% static 'sales/assets/js/core/bootstrap.min.js' %}"></script>
+    <script src="{% static 'sales/assets/js/plugin/chartist/chartist.min.js' %}"></script>
+    <script src="{% static 'sales/assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js' %}"></script>
+    <script>
+        function updateDashboard() {
+            const startDate = document.getElementById('start-date').value;
+            const endDate = document.getElementById('end-date').value;
+            if (startDate && endDate) {
+                // Simulate data update (replace with actual backend logic)
+                document.getElementById('best-electronics-vol').textContent = Math.floor(Math.random() * 200);
+                document.getElementById('best-electronics-sales').textContent = (Math.random() * 80000).toFixed(2);
+                document.getElementById('worst-electronics-vol').textContent = Math.floor(Math.random() * 10);
+                document.getElementById('worst-electronics-sales').textContent = (Math.random() * 500).toFixed(2);
+                document.getElementById('best-clothing-vol').textContent = Math.floor(Math.random() * 250);
+                document.getElementById('best-clothing-sales').textContent = (Math.random() * 30000).toFixed(2);
+                document.getElementById('worst-clothing-vol').textContent = Math.floor(Math.random() * 15);
+                document.getElementById('worst-clothing-sales').textContent = (Math.random() * 200).toFixed(2);
+            }
+            updateSalesGraph();
+        }
+
+        function updateSalesGraph() {
+            const duration = document.getElementById('sales-duration').value;
+            let labels = [];
+            let series = [[]];
+            const today = new Date('2025-04-01');
+
+            for (let i = duration - 1; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(today.getDate() - i);
+                labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+                series[0].push(Math.floor(Math.random() * 100000));
+            }
+
+            new Chartist.Line('#salesChart', {
+                labels: labels,
+                series: series
+            }, {
+                fullWidth: true,
+                chartPadding: { right: 40 },
+                axisX: { showGrid: false },
+                axisY: { labelInterpolationFnc: value => `$${value / 1000}K` }
+            });
+        }
+
+        function showForecasting() {
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('forecasting-section').style.display = 'block';
+        }
+
+        function showDashboard() {
+            document.getElementById('forecasting-section').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+        }
+
+        function printForecast() {
+            const forecastContent = document.getElementById('forecast-details').innerHTML;
+            const printWindow = window.open('', '', 'width=600,height=400');
+            printWindow.document.write('<html><head><title>Inventory Forecast</title></head><body>' + forecastContent + '</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        $(document).ready(function() {
+            updateDashboard();
+        });
+    </script>
+</body>
+</html>

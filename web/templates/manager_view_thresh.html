@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Department - ProStock</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding-top: 90px;
+            margin: 0;
+        }
+
+        /* Navbar Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .navbar {
+            position: fixed; /* Stick to the top */
+            top: 0;
+            left: 0;
+            width: 100vw; /* Full width */
+            height: 80px; /* Increase height */
+            background: #007bff; /* Your blue color */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px; /* Adjust padding as needed */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .navbar .logo {
+            height: 50px;
+        }
+
+        .navbar .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-left: auto; /* Pushes buttons to the right */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding-top: 80px;
+        }
+
+        .category-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 280px; /* Increase width to fit content better */
+            height: auto; /* Let the height adjust to content */
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, background-color 0.3s;
+            text-decoration: none;
+            font-size: 20px; /* Adjust font size */
+            font-weight: bold;
+            color: black;
+            padding: 15px;
+        }
+
+        .card h3 {
+            font-size: 24px; /* Larger font for product name */
+            font-weight: bold;
+            color: #007bff; /* Blue color for emphasis */
+        }
+
+        .card h4 {
+            font-size: 18px; /* Normal size for other text */
+            font-weight: normal;
+            color: #333; /* Dark color for other content */
+        }
+
+        .card:hover {
+            background-color: #c82333;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .card-buttons {
+            margin-top: 12px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .card-buttons button {
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .edit-btn {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #004099;
+            transform: scale(1.1);
+        }
+
+        .delete-btn {
+            background: linear-gradient(135deg, #dc3545, #b52a37);
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #a11d2a;
+            transform: scale(1.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .category-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .navbar {
+                flex-direction: column;
+                padding: 10px;
+            }
+
+            .navbar .nav-buttons {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <img src="/static/manager_home/assets/images/logoo.png" alt="Logo" class="logo">
+        <div class="nav-buttons">
+            <a href="manager_home">
+                <button type="button" class="btn btn-outline-dark">Home</button>
+            </a>
+<div class="navbar">
+    <img src="/static/manager_home/assets/images/logoo.png" alt="Logo" class="logo">
+    <input type="text" id="search-bar" class="form-control" placeholder="Search by product Name" style="width: 300px;">
+    <div class="nav-buttons">
+        <a href="manager_home">
+            <button type="button" class="btn btn-outline-dark">Home</button>
+        </a>
+    </div>
+</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="category-grid" id="category-list">
+            {% for i in data %}
+            <div class="card">
+                <h3> {{ i.product_name }}<br></h3>
+                <h4>₹{{ i.price }}<br>
+
+                    {{ i.st }}<br>
+                    <a href="/add_stock/{{ i.id }}/{{ i.product_name }}">
+                <button type="button" class="btn btn-success">Add Stock</button>
+            </a>
+
+                </h4>
+
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+<script>
+    document.getElementById("search-bar").addEventListener("keyup", function () {
+        let searchValue = this.value.toLowerCase();
+        let cards = document.querySelectorAll(".category-grid .card");
+
+        cards.forEach(card => {
+            let productName = card.querySelector("h3").textContent.toLowerCase();
+            if (productName.includes(searchValue)) {
+                card.style.display = "flex"; // Show matching product
+            } else {
+                card.style.display = "none"; // Hide non-matching products
+            }
+        });
+    });
+</script>
+</html>

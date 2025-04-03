@@ -1,0 +1,270 @@
+{#<!DOCTYPE html>#}
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>ProStock Manager</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/manager_home/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="/static/manager_home/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="/static/manager_home/assets/css/templatemo-lugx-gaming.css">
+    <link rel="stylesheet" href="/static/manager_home/assets/css/owl.css">
+    <link rel="stylesheet" href="/static/manager_home/assets/css/animate.css">
+    <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+<!--
+
+TemplateMo 589 lugx gaming
+
+https://templatemo.com/tm-589-lugx-gaming
+
+-->
+
+
+  </head>
+
+<body>
+
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="managerhome.html" class="logo">
+                        <img src="../static/manager_home/assets/images/logoo.png"  >
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+          <ul class="nav d-flex align-items-center">
+    <li class="nav-item">
+        <a href="managerhome.html" class="nav-link active">Home</a>
+    </li>
+    <li class="nav-item">
+        <a href="../static/manager_home/contact.html" class="nav-link">Contact Us</a>
+    </li>
+    <li class="nav-item position-relative">
+        <a href="manager_view_sales" class="nav-link">Sales</a>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ nat }}</span>
+    </li>
+
+    <li class="nav-item position-relative">
+
+        <a href="manager_view_thresh" class="yyy"><i class="bi bi-bell fs-4"></i></a> <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ request.session.ps }}
+        </span>
+    </li>
+</ul>
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+  <div class="main-banner">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 align-self-center">
+          <div class="caption header-text">
+            <h6>Welcome to ProStock</h6>
+            <h2>INVENTORY MANAGEMENT MADE SIMPLE</h2>
+              <p>ProStock is an advanced inventory forecasting platform designed for MyG, enabling precise stock management and demand prediction. With real-time analytics and AI-driven insights, ProStock helps businesses optimize inventory levels, reduce wastage, and improve operational efficiency.</p>
+            {% comment %}<div class="search-input">
+              <form id="search" action="#">
+                <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" onkeypress="handle" />
+                <button role="button">Search Now</button>
+              </form>
+            </div>{% endcomment %}
+          </div>
+        </div>
+        <div class="col-lg-4 offset-lg-2">
+          <div class="right-image">
+            <img src="../static/manager_home/assets/images/banner.jpg" alt="">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-md-6">
+          <a href="/view_employee">
+            <div class="item">
+              <div class="image">
+                <img src="../static/manager_home/assets/images/featured-01.png" alt="" style="max-width: 44px;">
+              </div>
+              <h4>manage Employee</h4>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <a href="/employee_sales_history">
+            <div class="item">
+              <div class="image">
+                <img src="../static/manager_home/assets/images/featured-02.png" alt="" style="max-width: 44px;">
+              </div>
+              <h4>Sales</h4>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <a href="inventory">
+            <div class="item">
+              <div class="image">
+                <img src="../static/manager_home/assets/images/featured-03.png" alt="" style="max-width: 44px;">
+              </div>
+              <h4>Inventory</h4>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <a href="/view_review">
+            <div class="item">
+              <div class="image">
+                <img src="../static/manager_home/assets/images/featured-04.png" alt="" style="max-width: 44px;">
+              </div>
+              <h4>Reviews</h4>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="section cta">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5">
+          <div class="shop">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="section-heading">
+                  <h6>Our Team</h6>
+                  <h2>We are here<em>24*7</em> For You!</h2>
+                </div>
+                <p>Our expert IT team is available 24/7 to ensure seamless support and uninterrupted service. Whether it's troubleshooting or system enhancements, we’ve got you covered anytime, anywhere!</p>
+                <div class="main-button">
+                  <a href="../static/manager_home/contact.html">Contact us</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+  <footer>
+
+  </footer>
+
+  <!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="../static/manager_home/vendor/jquery/jquery.min.js"></script>
+  <script src="../static/manager_home/vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../static/manager_home/assets/js/isotope.min.js"></script>
+  <script src="../static/manager_home/assets/js/owl-carousel.js"></script>
+  <script src="../static/manager_home/assets/js/counter.js"></script>
+  <script src="../static/manager_home/assets/js/custom.js"></script>
+
+
+
+
+
+<script>
+    function fetchNotifications() {
+    let loginId = $('#notification-count').data('login-id'); // Get login ID dynamically
+
+    $.ajax({
+        url: '/view-sales-notifications/',
+        type: 'POST',  // Change to 'GET' if applicable
+        contentType: 'application/json',
+        headers: { "X-CSRFToken": "{{ csrf_token }}" }, // Needed if using POST in Django
+        data: JSON.stringify({ 'login_id': loginId }),
+        success: function(response) {
+            if (response.status === 'success') {
+                let notificationCount = response.count || 0;
+
+
+
+                // Update badge count
+                $('#notification-badge').text(notificationCount);
+
+                // Hide badge if there are no notifications
+                if (notificationCount === 0) {
+                    $('#notification-badge').hide();
+                } else {
+                    $('#notification-badge').show();
+                }
+
+                // Update notification list
+                let notificationsHtml = response.notifications.length > 0 ?
+                    response.notifications.map(notification => `
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <h5 class="card-title">Sale #${notification.sale_id}</h5>
+                                <p>Employee: ${notification.employee_name}</p>
+                                <p>Customer: ${notification.customer_name}</p>
+                                <p>Product: ${notification.product_name}</p>
+                                <p>Quantity: ${notification.quantity} - Total: $${notification.total}</p>
+                                <p>Date: ${notification.date} ${notification.time}</p>
+                                <p>Status: ${notification.status}</p>
+                            </div>
+                        </div>
+                    `).join('') : '<p class="text-muted">No new notifications.</p>';
+
+                $('#notifications-list').html(notificationsHtml);
+            } else {
+                console.error('Error:', response.message);
+                $('#notifications-list').html('<p class="text-danger">Error fetching notifications.</p>');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('AJAX Error:', error);
+            $('#notifications-list').html('<p class="text-danger">Failed to load notifications.</p>');
+        }
+    });
+}
+
+// Initial call
+fetchNotifications();
+
+// Continuous polling every 5 seconds
+setInterval(fetchNotifications, 5000);
+
+</script>
+
+  </body>
+{#</html>#}

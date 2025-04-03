@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Product Catalog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding-top: 90px;
+            margin: 0;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 80px;
+            background: #007bff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .navbar .logo {
+            height: 50px;
+        }
+
+        .navbar .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-left: auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Search Filter Section */
+        .search-filter {
+            background-color: #f5f5f5;
+            padding: 20px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        /* Product Card */
+        .product-card {
+            background-color: white;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            background-color: #ffc720;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .product-name {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: #333;
+            height: 48px;
+            overflow: hidden;
+        }
+
+        .product-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .filter-row {
+                flex-direction: column;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <img src="/static/manager_home/assets/images/logoo.png" alt="Logo" class="logo">
+        <div class="nav-buttons">
+            <a href="/manager_home">
+                <button type="button" class="btn btn-outline-dark">Home</button>
+            </a>
+        </div>
+    </div>
+
+    <a href="/add_product" class="btn btn-primary mt-4">Add Product</a>
+
+    <div class="container">
+        <!-- Search Filter Section -->
+        <div class="search-filter">
+            <!-- Search Bar -->
+            <div class="filter-group" style="margin-bottom: 20px;">
+                <label for="search">Search Products</label>
+                <input type="text" id="search" class="form-control" placeholder="Enter product name...">
+            </div>
+
+            <!-- Existing Filters -->
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="department">Department</label>
+                    <select id="department">
+                        <option value="">All Departments</option>
+                        {% for dept in department %}
+                        <option value="{{ dept.department_name }}">{{ dept.department_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="category">Category</label>
+                    <select id="category">
+                        <option value="">All Categories</option>
+                        {% for cat in category %}
+                        <option value="{{ cat.name }}">{{ cat.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="brand">Brand</label>
+                    <select id="brand">
+                        <option value="">All Brands</option>
+                        {% for br in brand %}
+                        <option value="{{ br.name }}">{{ br.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="product-grid">
+            {% for i in products %}
+            <div class="product-card"
+                 data-department="{{ i.department_id.department_name }}"
+                 data-category="{{ i.CATEGORY.name }}"
+                 data-brand="{{ i.BRAND.name }}">
+{#                <img src="{{ i.image.url }}" alt="Product" class="product-image">#}
+                <div class="product-info">
+                    <div class="product-name">{{ i.product_name }}</div>
+                    <div class="product-price">₹{{ i.price }}</div>
+                    <div class="product-price">Department: {{ i.department_id.department_name }}</div>
+                    <div class="product-price">Category: {{ i.CATEGORY.name }}</div>
+                    <div class="product-price">Brand: {{ i.BRAND.name }}</div>
+                    <div class="product-price">Stock: {{ i.st }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const departmentFilter = document.getElementById("department");
+            const categoryFilter = document.getElementById("category");
+            const brandFilter = document.getElementById("brand");
+            const searchFilter = document.getElementById("search");
+            const products = document.querySelectorAll(".product-card");
+
+            function filterProducts() {
+                const departmentValue = departmentFilter.value.toLowerCase();
+                const categoryValue = categoryFilter.value.toLowerCase();
+                const brandValue = brandFilter.value.toLowerCase();
+                const searchValue = searchFilter.value.toLowerCase();
+
+                products.forEach(product => {
+                    const productDepartment = product.getAttribute("data-department").toLowerCase();
+                    const productCategory = product.getAttribute("data-category").toLowerCase();
+                    const productBrand = product.getAttribute("data-brand").toLowerCase();
+                    const productName = product.querySelector(".product-name").textContent.toLowerCase();
+
+                    const departmentMatch = !departmentValue || productDepartment === departmentValue;
+                    const categoryMatch = !categoryValue || productCategory === categoryValue;
+                    const brandMatch = !brandValue || productBrand === brandValue;
+                    const searchMatch = !searchValue || productName.includes(searchValue);
+
+                    if (departmentMatch && categoryMatch && brandMatch && searchMatch) {
+                        product.style.display = "block";
+                    } else {
+                        product.style.display = "none";
+                    }
+                });
+            }
+
+            departmentFilter.addEventListener("change", filterProducts);
+            categoryFilter.addEventListener("change", filterProducts);
+            brandFilter.addEventListener("change", filterProducts);
+            searchFilter.addEventListener("input", filterProducts);
+        });
+    </script>
+</body>
+</html>
